@@ -462,18 +462,18 @@ console.log(getUrlData("https://username:password@example.com:8080/path"));
 
 // Завдання 14
 /** Функція `sortUrlParams` приймає URL і повертає новий URL з відсортованими пошуковими параметрами.
- * @url (рядок) - URL-адреса для аналізу.
+ * url (рядок) - URL-адреса для аналізу.
  * Функція повертає новий URL з відсортованими пошуковими параметрами за ключами у порядку зростання. */
 function sortUrlParams(url) {
   // Створюємо новий об'єкт URL з вхідної URL-адреси.
   let newUrl = new URL(url);
   // Отримуємо масив з ключами і значеннями параметрів за допомогою методу 'entries'.
-  let parameters = newUrl.searchParams.entries();
-  // console.log(parameters);
+  newUrl.searchParams.sort();
   // Сортуємо масив за ключами у порядку зростання.
   // Очищуємо пошукові параметри URL.
   // Додаємо відсортовані параметри до URL.
   // Повертаємо новий URL як рядок.
+  return newUrl.toString();
 }
 
 // Приклад використання функції sortUrlParams
@@ -485,47 +485,59 @@ console.log(
 
 
 // Завдання 15
-/**
- * Функція `getURLValues` приймає URL і повертає масив значень пошукових параметрів.
+/** Функція `getURLValues` приймає URL і повертає масив значень пошукових параметрів.
  * url - URL-адреса для аналізу.
- * Повертаємо - Масив значень пошукових параметрів.
- */
+ * Повертаємо - Масив значень пошукових параметрів. */
 function getURLValues(url) {
   // Створюємо новий об'єкт URL з вхідною URL-адресою.
+  let newUrl = new URL(url);
   // Отримуємо об'єкт `URLSearchParams` з пошуковими параметрами.
+  const newUrlSearchParams = newUrl.searchParams;
+  // console.log(newUrlSearchParams);
   // Отримуємо масив ключів пошукових параметрів.
+  let keys = newUrlSearchParams.keys();
   // Масив для збереження значень пошукових параметрів.
+  let result = [];
   // Перебираємо ключі пошукових параметрів.
-  // Отримуємо всі значення для даного ключа за допомогою методу `getAll`.
+  for (const key of keys) {
+    // Отримуємо всі значення для даного ключа за допомогою методу `getAll`.
   // Додаємо значення до масиву.
+  result.push(newUrlSearchParams.getAll(key))
   // Повертаємо масив значень пошукових параметрів.
+  }
+  return result
 }
 
 // Приклад використання функції getURLValues
-// console.log("Завдання: 15 ==============================");
-// console.log(
-//   getURLValues(
-//     "https://example.com/path?param1=value1&param2=value2&param3=value3"
-//   )
-// );
+console.log("Завдання: 15 ==============================");
+console.log(
+  getURLValues(
+    "https://example.com/path?param1=value1&param2=value2&param3=value3"
+  )
+);
 
 // Завдання 16
 
-/**
- * Функція `getUrlKeys` приймає URL і повертає масив з ключами пошукових параметрів.
+/** Функція `getUrlKeys` приймає URL і повертає масив з ключами пошукових параметрів.
  * @url (рядок) - URL-адреса для аналізу.
- *
- * Функція повертає масив, що містить усі ключі пошукових параметрів.
- */
+ * Функція повертає масив, що містить усі ключі пошукових параметрів */
 function getUrlKeys(url) {
   // Створюємо новий об'єкт URL з вхідної URL-адреси.
+  let newUrl = new URL(url);
   // Отримуємо масив зі всіма ключами пошукових параметрів за допомогою методу 'keys'.
+  let result = newUrl.searchParams.keys();
+  // console.log(Array.isArray(result))
+  let resultArray = new Array();
+  for (let key of result) {
+    resultArray.push(key);
+  }
   // Повертаємо масив з ключами.
+  return resultArray;
 }
 
 // Приклад використання функції getUrlKeys
-// console.log("Завдання: 16 ==============================");
-// console.log(getUrlKeys("https://example.com/path?param1=value1&param2=value2"));
+console.log("Завдання: 16 ==============================");
+console.log(getUrlKeys("https://example.com/path?param1=value1&param2=value2"));
 // Виведе: [ 'param1', 'param2' ]
 
 
@@ -581,12 +593,12 @@ const parseUser = JSON.parse(jsonUser, (key, value) => {
 // Робота з конструктором URL
 // create URL object
 // const burl = new URL("https://admin:admax@bridgeclub.org.ua/school/3/6#%D0%B1%D1%83%D0%B1%D0%BD%D0%B0");
-const urlBridge = new URL('/school/3/6', 'https://bridgeclub.org.ua');
+// const urlBridge = new URL('/school/3/6', 'https://bridgeclub.org.ua');
 // const akpp = new URL('https://www.google.com/search?q=transmission+oil+change&oq=transmission+oil+change&aqs=chrome..69i57j0i512l9.9189j0j15&sourceid=chrome&ie=UTF-8');
 // console.log('full path is -', urlBridge.href); // повний шлях на сайті, те що буде в командній строкці браузера
 // console.log('the protocol type is -', url.protocol); // type of protocol
 // console.log('path inside domain name is - ', url.pathname); // path inside domain
-console.log('domain name include protocol is -', urlBridge.origin); // domain + protocol
+// console.log('domain name include protocol is -', urlBridge.origin); // domain + protocol
 // console.log(burl.host); // return domain or host name and add port if it is
 // console.log(urlBridge.hostname); // return domain or host name ONLY without port name
 // console.log('якірь у посиланні - ', url.hash); // повертає значення якоря (те що стоїть після # у адресній строці) якщо воно є
